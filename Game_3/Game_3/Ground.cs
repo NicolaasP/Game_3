@@ -12,7 +12,7 @@ namespace Game_3
         public int x;
         public int y;
         private const int width = 1000;
-        private const int height = 1000;
+        private const int height = 400;
 
         public Ground(int x, int y)
         {

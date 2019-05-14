@@ -8,8 +8,10 @@ namespace Game_3
 {
     class Settings
     {
-        public int gravSpeed = 20;
-        public int jumpHeight = 30;
-        public int playerSpeed = 10;
+        public static int baseSpeed = 1;
+        public int gravSpeed = baseSpeed * 5;
+        public int jumpHeight = baseSpeed * 50;
+        public int playerXSpeed = baseSpeed * 0;
+        public int playerYSpeed = baseSpeed * 0;
     }
 }

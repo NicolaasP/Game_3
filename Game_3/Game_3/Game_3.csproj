@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="box.cs" />
     <Compile Include="Ground.cs" />
+    <Compile Include="Hline.cs" />
     <Compile Include="MainGame.cs">
       <SubType>Form</SubType>
     </Compile>
