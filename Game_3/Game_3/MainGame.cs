@@ -36,6 +36,7 @@ namespace Game_3
 
         private void MainGame_Load(object sender, EventArgs e)
         {
+            this.BackColor = Color.White;
             player = new Player(10, 550);
             ground = new Ground(-10, 600);
             goal = new box(954, 570);
@@ -78,8 +79,9 @@ namespace Game_3
             {
 
             }
-
+            Console.WriteLine("ran");
             graphics.FillRectangle(Brushes.Brown, ground.x, ground.y, ground.getWidth(), ground.getHeight());
+
         }
 
         private void MainGame_FormClosed(object sender, FormClosedEventArgs e)
@@ -95,7 +97,6 @@ namespace Game_3
 
         private void Ticker_Tick(object sender, EventArgs e)
         {
-            this.Invalidate();
             int pastX = player.x;
             int pastY = player.y;
             player.x -= settings.playerXSpeed;
@@ -109,11 +110,19 @@ namespace Game_3
             {
                 player.y += settings.gravSpeed;
             }
+            repaint(pastX, pastY);
             if (player.x < 0) player.x = 0;
             l.Text = "Player x: " + player.x; 
             if ((player.x + (player.getWidth() + 16)) > this.Width) player.x = (this.Width - (player.getWidth() + 16));
             hitBox(pastX, pastY);
             if (new Rectangle(player.x, player.y, player.getWidth(), player.getHeight()).IntersectsWith(new Rectangle(goal.x, goal.y, goal.Width, goal.Height))) Win();
+        }
+
+        private void repaint(int pX, int pY)
+        {
+            Graphics graphics = this.CreateGraphics();
+            graphics.FillRectangle(Brushes.LightBlue, pX, pY, player.getWidth(), player.getHeight());
+            graphics.FillRectangle(Brushes.Blue, player.x, player.y, player.getWidth(), player.getHeight());
         }
 
         private void Win()
@@ -132,6 +141,7 @@ namespace Game_3
             settings.playerYSpeed = 0;
             traps.Clear();
             genEn();
+            this.Invalidate();
         }
 
         private void hitBox(int pX, int pY)
@@ -163,6 +173,7 @@ namespace Game_3
             settings.playerXSpeed = 0;
             settings.playerYSpeed = 0;
             ticker.Start();
+            this.Invalidate();
         }
 
         private void jump()
@@ -184,6 +195,12 @@ namespace Game_3
             traps.Add(new box(x, y));
         }
 
+        private void removeTraps()
+        {
+            traps.Clear();
+            this.Invalidate();
+        }
+
         private void MainGame_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyData)
@@ -202,6 +219,9 @@ namespace Game_3
                     break;
                 case Keys.O:
                     reset();
+                    break;
+                case Keys.L:
+                    removeTraps();
                     break;
             }
         }
